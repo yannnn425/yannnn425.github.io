@@ -10,30 +10,46 @@
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
-      --cream:      #F6F1E7;
-      --cream-dark: #EDE6D6;
-      --brown:      #2B2118;
-      --red:        #C0392B;
-      --gray:       #7A7268;
-      --white:      #FFFFFF;
-      --border:     rgba(43,33,24,.12);
+      --black:  #111111;
+      --red:    #D4312A;
+      --white:  #FFFFFF;
+      --gray:   #767676;
+      --line:   rgba(17,17,17,.12);
+      --bg-ph:  #EFEFEF; /* placeholder blocks */
     }
 
     body {
       font-family: 'Noto Sans TC', sans-serif;
-      background: var(--cream);
-      color: var(--brown);
-      overflow-x: hidden;
+      background: var(--white);
+      color: var(--black);
+      overflow-x: hidden; /* prevents horizontal scroll from corner flowers */
     }
 
-    /* ─── Decorative flowers (SVG inline via background) ─── */
-    .flower {
+    /* ══════════════════════════════
+       FLOWER DECORATIONS
+       · position: absolute on <body> (body is the containing block)
+       · z-index: -10 → always beneath every content layer
+       · opacity: 0.85 → background-decoration feel
+       · max size ≈ 12 vw; partially clipped at page edges (diagonal layout)
+    ══════════════════════════════ */
+    body { position: relative; }
+
+    .deco-flower {
       position: absolute;
       pointer-events: none;
-      opacity: .18;
+      z-index: -1;
+      opacity: 0.85;
     }
 
-    /* ─── NAVBAR ─── */
+    /* Content layers sit above flowers */
+    nav, section, .hero, .bottom-band, footer {
+      position: relative;
+      z-index: 0;
+    }
+
+    /* ══════════════════════════════
+       NAVBAR
+    ══════════════════════════════ */
     nav {
       position: sticky;
       top: 0;
@@ -43,29 +59,28 @@
       justify-content: space-between;
       padding: 0 52px;
       height: 60px;
-      background: var(--cream);
-      border-bottom: 1px solid var(--border);
+      background: var(--white);
+      border-bottom: 1px solid var(--line);
     }
 
     .nav-links {
       display: flex;
-      gap: 0;
       list-style: none;
     }
 
     .nav-links li a {
       display: inline-block;
-      padding: 4px 22px;
+      padding: 4px 20px;
       font-size: 14.5px;
       font-weight: 500;
-      color: var(--brown);
+      color: var(--black);
       text-decoration: none;
       border-bottom: 2.5px solid transparent;
       transition: border-color .2s, color .2s;
     }
 
     .nav-links li a:hover {
-      border-bottom-color: var(--brown);
+      border-bottom-color: var(--black);
     }
 
     .nav-links li.active a {
@@ -77,24 +92,24 @@
       display: flex;
       align-items: center;
       gap: 10px;
-      font-size: 17px;
+      font-size: 16px;
       font-weight: 700;
       letter-spacing: .04em;
       white-space: nowrap;
+      color: var(--black);
     }
 
     .nav-logo .x-mark {
       font-weight: 300;
-      font-size: 18px;
+      font-size: 17px;
       color: var(--gray);
     }
 
-    /* MINI circular badge */
     .mini-badge {
       width: 38px;
       height: 38px;
       border-radius: 50%;
-      border: 2.5px solid var(--brown);
+      border: 2.5px solid var(--black);
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -103,11 +118,13 @@
       font-weight: 700;
       letter-spacing: .06em;
       line-height: 1.3;
+      color: var(--black);
     }
-
     .mini-badge span:first-child { font-size: 9px; }
 
-    /* ─── HERO ─── */
+    /* ══════════════════════════════
+       HERO
+    ══════════════════════════════ */
     .hero {
       position: relative;
       padding: 56px 52px 0;
@@ -115,7 +132,6 @@
       overflow: hidden;
     }
 
-    /* background flower deco */
     .hero-flowers {
       position: absolute;
       inset: 0;
@@ -139,9 +155,9 @@
     }
 
     .hero-copy .collab-line {
-      font-size: 21px;
+      font-size: 20px;
       font-weight: 400;
-      color: var(--brown);
+      color: var(--black);
       margin-bottom: 6px;
     }
 
@@ -149,7 +165,7 @@
       font-size: 80px;
       font-weight: 900;
       line-height: 1.05;
-      color: var(--brown);
+      color: var(--black);
       margin-bottom: 24px;
       letter-spacing: .02em;
     }
@@ -157,24 +173,18 @@
     .hero-copy .pill {
       display: inline-block;
       background: var(--white);
-      border: 1.5px solid var(--border);
+      border: 1.5px solid var(--black);
       border-radius: 999px;
       padding: 8px 22px;
       font-size: 14px;
-      color: #555;
+      color: var(--black);
     }
 
-    /* DOWN ARROW */
     .scroll-arrow {
       margin-top: 60px;
       display: flex;
       align-items: center;
-      gap: 8px;
-      color: var(--gray);
-      font-size: 13px;
     }
-
-    .scroll-arrow svg { flex-shrink: 0; }
 
     /* RIGHT VISUAL */
     .hero-visual {
@@ -182,53 +192,27 @@
       position: relative;
     }
 
-    /* Car placeholder */
     .car-block {
       width: 100%;
       height: 370px;
-      background: var(--cream-dark);
+      background: var(--bg-ph);
       border-radius: 16px;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #aaa;
-      font-size: 13px;
       position: relative;
       overflow: hidden;
-    }
-
-    /* Flower pattern on car placeholder */
-    .car-block::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background-image:
-        radial-gradient(circle 28px, #3a3228 100%, transparent 0),
-        radial-gradient(circle 28px, #FFFFFF 100%, transparent 0),
-        radial-gradient(circle 28px, #3a3228 100%, transparent 0),
-        radial-gradient(circle 28px, #FFFFFF 100%, transparent 0),
-        radial-gradient(circle 28px, #c04a28 100%, transparent 0),
-        radial-gradient(circle 28px, #3a3228 100%, transparent 0);
-      background-size: 120px 120px;
-      background-position:
-        10% 30%,
-        35% 60%,
-        60% 25%,
-        80% 70%,
-        50% 80%,
-        75% 40%;
-      background-repeat: no-repeat;
-      opacity: .25;
     }
 
     .car-label {
       position: relative;
       z-index: 1;
-      background: rgba(255,255,255,.7);
+      background: rgba(255,255,255,.8);
       border-radius: 8px;
       padding: 8px 16px;
       font-size: 13px;
-      color: #888;
+      color: #999;
+      border: 1px solid var(--line);
     }
 
     /* FEATURE CALLOUT BOX */
@@ -240,13 +224,15 @@
       background: var(--white);
       border-radius: 14px;
       padding: 14px;
-      box-shadow: 0 6px 24px rgba(0,0,0,.10);
+      border: 1px solid var(--line);
+      box-shadow: 0 4px 16px rgba(0,0,0,.08);
     }
 
     .feature-box h3 {
       font-size: 13.5px;
       font-weight: 700;
       margin-bottom: 10px;
+      color: var(--black);
     }
 
     .feature-grid {
@@ -261,14 +247,12 @@
       position: relative;
     }
 
-    .feature-thumb.wide {
-      grid-column: 1 / -1;
-    }
+    .feature-thumb.wide { grid-column: 1 / -1; }
 
     .thumb-block {
       width: 100%;
       height: 76px;
-      background: var(--cream-dark);
+      background: var(--bg-ph);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -276,15 +260,13 @@
       color: #aaa;
     }
 
-    .thumb-block.tall { height: 120px; }
-
     .num-badge {
       position: absolute;
       top: 5px;
       left: 5px;
       width: 18px;
       height: 18px;
-      background: var(--brown);
+      background: var(--black);
       color: var(--white);
       border-radius: 50%;
       font-size: 10px;
@@ -301,27 +283,28 @@
       line-height: 1.5;
     }
 
-    /* ─── BOTTOM BAND ─── */
+    /* ══════════════════════════════
+       BOTTOM BAND
+    ══════════════════════════════ */
     .bottom-band {
       display: flex;
-      gap: 0;
-      padding: 48px 52px 52px;
+      padding: 48px 52px 56px;
       align-items: flex-start;
       margin-top: 32px;
+      position: relative;
     }
 
-    /* Brand story */
     .brand-story {
       flex: 0 0 45%;
       padding-right: 40px;
-      border-right: 1px solid var(--border);
+      border-right: 1px solid var(--line);
     }
 
     .story-text {
       font-size: 14px;
       line-height: 2;
       color: var(--gray);
-      border-left: 3.5px solid var(--cream-dark);
+      border-left: 3px solid var(--black);
       padding-left: 16px;
       margin-bottom: 28px;
     }
@@ -330,20 +313,21 @@
       list-style: none;
       display: flex;
       flex-direction: column;
-      gap: 14px;
+      gap: 16px;
     }
 
     .bullet-list li {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
       font-size: 20px;
       font-weight: 700;
+      color: var(--black);
     }
 
     .bullet-dot {
-      width: 10px;
-      height: 10px;
+      width: 11px;
+      height: 11px;
       border-radius: 50%;
       background: var(--red);
       flex-shrink: 0;
@@ -366,14 +350,12 @@
       flex-direction: column;
       align-items: center;
       gap: 14px;
-      box-shadow: 0 2px 10px rgba(0,0,0,.06);
+      border: 1.5px solid var(--line);
     }
 
     .card-icon {
       width: 80px;
       height: 80px;
-      background: var(--cream);
-      border-radius: 10px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -383,6 +365,7 @@
       font-size: 14.5px;
       font-weight: 700;
       text-align: center;
+      color: var(--black);
     }
 
     .card p {
@@ -392,23 +375,61 @@
       line-height: 1.7;
     }
 
-    /* ─── FOOTER ─── */
+    /* ══════════════════════════════
+       FOOTER
+    ══════════════════════════════ */
     footer {
       text-align: center;
       padding: 18px 52px;
       font-size: 11px;
       color: var(--gray);
-      border-top: 1px solid var(--border);
-    }
-
-    /* ─── SVG flower helper ─── */
-    .deco-flower {
-      position: absolute;
-      pointer-events: none;
+      border-top: 1px solid var(--line);
     }
   </style>
 </head>
 <body>
+
+<!-- ══════════ FLOWER DECORATIONS ══════════
+     只保留兩朵，z-index: -1
+     · 左上黑花：中心對齊標題左邊（x≈52px），垂直置中於 h1 區域
+     · 右上紅花：右半超出右邊緣，尺寸 12vh
+══════════════════════════════════════════ -->
+
+<!-- 左上：黑色大花
+     花朵中心 x = hero 左 padding 52px → left = 52px - 花寬/2 = calc(52px - 12.5vh)
+     花朵中心 y = nav(60) + hero padding(56) + collab行(28) + h1半高(85) ≈ 229px
+     → top = 229px - 花高/2 = calc(229px - 12.5vh)                              -->
+<svg class="deco-flower"
+     style="top:calc(229px - 12.5vh); left:calc(52px - 12.5vh);
+            width:25vh; height:25vh; min-width:150px; min-height:150px; max-width:200px; max-height:200px;"
+     viewBox="0 0 100 100" aria-hidden="true">
+  <g transform="translate(50,50)">
+    <circle cx="0"   cy="-26" r="18" fill="#111"/>
+    <circle cx="22"  cy="-13" r="18" fill="#111"/>
+    <circle cx="22"  cy="13"  r="18" fill="#111"/>
+    <circle cx="0"   cy="26"  r="18" fill="#111"/>
+    <circle cx="-22" cy="13"  r="18" fill="#111"/>
+    <circle cx="-22" cy="-13" r="18" fill="#111"/>
+    <circle cx="0"   cy="0"   r="12" fill="#fff"/>
+    <circle cx="0"   cy="0"   r="5"  fill="#111"/>
+  </g>
+</svg>
+
+<!-- 右上：紅色中花，縮小至 12vh，右半超出右邊緣 -->
+<svg class="deco-flower"
+     style="top:148px; right:calc(-6vh); width:12vh; height:12vh; min-width:80px; min-height:80px; max-width:110px; max-height:110px;"
+     viewBox="0 0 100 100" aria-hidden="true">
+  <g transform="translate(50,50)">
+    <circle cx="0"   cy="-26" r="18" fill="#D4312A"/>
+    <circle cx="22"  cy="-13" r="18" fill="#D4312A"/>
+    <circle cx="22"  cy="13"  r="18" fill="#D4312A"/>
+    <circle cx="0"   cy="26"  r="18" fill="#D4312A"/>
+    <circle cx="-22" cy="13"  r="18" fill="#D4312A"/>
+    <circle cx="-22" cy="-13" r="18" fill="#D4312A"/>
+    <circle cx="0"   cy="0"   r="12" fill="#fff"/>
+    <circle cx="0"   cy="0"   r="4"  fill="#D4312A"/>
+  </g>
+</svg>
 
 <!-- ══════════ NAVBAR ══════════ -->
 <nav>
@@ -433,54 +454,25 @@
 
 <!-- ══════════ HERO ══════════ -->
 <section class="hero">
-
-  <!-- Background flower decorations -->
-  <div class="hero-flowers">
-    <svg class="deco-flower" style="top:-30px;left:-40px;opacity:.12" width="180" height="180" viewBox="0 0 180 180">
-      <g transform="translate(90,90)">
-        <ellipse rx="22" ry="40" fill="#3a3228" transform="rotate(0)"/>
-        <ellipse rx="22" ry="40" fill="#3a3228" transform="rotate(60)"/>
-        <ellipse rx="22" ry="40" fill="#3a3228" transform="rotate(120)"/>
-        <circle r="20" fill="#F6F1E7"/>
-      </g>
-    </svg>
-    <svg class="deco-flower" style="bottom:20px;left:10px;opacity:.1" width="120" height="120" viewBox="0 0 120 120">
-      <g transform="translate(60,60)">
-        <ellipse rx="15" ry="27" fill="#c04a28" transform="rotate(0)"/>
-        <ellipse rx="15" ry="27" fill="#c04a28" transform="rotate(60)"/>
-        <ellipse rx="15" ry="27" fill="#c04a28" transform="rotate(120)"/>
-        <circle r="14" fill="#F6F1E7"/>
-      </g>
-    </svg>
-    <svg class="deco-flower" style="top:10px;right:300px;opacity:.09" width="90" height="90" viewBox="0 0 90 90">
-      <g transform="translate(45,45)">
-        <ellipse rx="11" ry="20" fill="#3a3228" transform="rotate(0)"/>
-        <ellipse rx="11" ry="20" fill="#3a3228" transform="rotate(60)"/>
-        <ellipse rx="11" ry="20" fill="#3a3228" transform="rotate(120)"/>
-        <circle r="10" fill="#F6F1E7"/>
-      </g>
-    </svg>
-  </div>
-
   <div class="hero-layout">
 
-    <!-- LEFT: copy -->
+    <!-- LEFT copy -->
     <div class="hero-copy">
       <p class="collab-line">mini matters x MINI Cooper：</p>
       <h1>小事・<br>大美好</h1>
       <div class="pill">專為小個子女生設計的完美座駕</div>
       <div class="scroll-arrow">
-        <svg width="16" height="24" viewBox="0 0 16 24" fill="none">
-          <line x1="8" y1="0" x2="8" y2="20" stroke="#7A7268" stroke-width="1.5"/>
-          <polyline points="3,15 8,21 13,15" fill="none" stroke="#7A7268" stroke-width="1.5"/>
+        <svg width="16" height="26" viewBox="0 0 16 26" fill="none">
+          <line x1="8" y1="0" x2="8" y2="20" stroke="#111" stroke-width="1.5"/>
+          <polyline points="3,15 8,22 13,15" fill="none" stroke="#111" stroke-width="1.5"/>
         </svg>
       </div>
     </div>
 
-    <!-- RIGHT: visual + feature callout -->
+    <!-- RIGHT visual + feature callout -->
     <div class="hero-visual">
 
-      <!-- Car image placeholder -->
+      <!-- Car placeholder -->
       <div class="car-block">
         <div class="car-label">車輛主視覺圖（待替換）</div>
       </div>
@@ -489,17 +481,15 @@
       <div class="feature-box">
         <h3>小個子女生專屬功能：</h3>
         <div class="feature-grid">
-          <!-- Row 1: wide top photo -->
-          <div class="feature-thumb wide" style="position:relative">
-            <div class="thumb-block tall" style="height:90px">座椅調整示意（待替換）</div>
+          <div class="feature-thumb wide">
+            <div class="thumb-block" style="height:90px">座椅調整示意（待替換）</div>
             <div class="num-badge">1</div>
           </div>
-          <!-- Row 2: two side-by-side -->
-          <div class="feature-thumb" style="position:relative">
+          <div class="feature-thumb">
             <div class="thumb-block">踏板示意</div>
             <div class="num-badge">1</div>
           </div>
-          <div class="feature-thumb" style="position:relative">
+          <div class="feature-thumb">
             <div class="thumb-block">方向盤示意</div>
             <div class="num-badge">2</div>
           </div>
@@ -517,9 +507,7 @@
   <!-- Brand story copy -->
   <div class="brand-story">
     <p class="story-text">
-      MINI matters × MINI Cooper 特別版聯名組合主韌聯名品mini matters<br>
-      幫著爸自圍主的故事，專為小個子中央黴觸子祺剙版前叭har、黌木、關車<br>
-      進計孩子的完美駕座好，小個子女生專屬功能能力。
+      當經典車藝遇上微小卻重要的生活美學，專為小個子女生打造的移動空間誕生了。MINI Cooper 注入 mini matters 標誌性花朵，讓每一次駕馭都充滿春日浪漫。從結構優化到感性塗裝，我們重新定義視線高度，讓妳的世界從此大不相同。
     </p>
     <ul class="bullet-list">
       <li>
@@ -538,50 +526,47 @@
 
     <div class="card">
       <div class="card-icon">
-        <!-- Seat icon -->
-        <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
-          <rect x="8" y="10" width="20" height="28" rx="3" stroke="#3a3228" stroke-width="2" fill="none"/>
-          <rect x="28" y="28" width="12" height="8" rx="2" stroke="#3a3228" stroke-width="2" fill="none"/>
-          <line x1="28" y1="32" x2="8" y2="32" stroke="#3a3228" stroke-width="2"/>
-          <path d="M8 38 L8 42" stroke="#3a3228" stroke-width="2" stroke-linecap="round"/>
-          <path d="M28 38 L28 42" stroke="#3a3228" stroke-width="2" stroke-linecap="round"/>
-          <path d="M14 10 Q24 4 32 12" stroke="#c04a28" stroke-width="1.5" fill="none" stroke-dasharray="3 2"/>
+        <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+          <rect x="8" y="10" width="22" height="30" rx="3" stroke="#111" stroke-width="2"/>
+          <rect x="30" y="30" width="14" height="9" rx="2" stroke="#111" stroke-width="2"/>
+          <line x1="30" y1="34" x2="8" y2="34" stroke="#111" stroke-width="2"/>
+          <line x1="10" y1="40" x2="10" y2="46" stroke="#111" stroke-width="2" stroke-linecap="round"/>
+          <line x1="30" y1="40" x2="30" y2="46" stroke="#111" stroke-width="2" stroke-linecap="round"/>
+          <path d="M14 10 Q28 3 38 12" stroke="#D4312A" stroke-width="2" fill="none" stroke-linecap="round"/>
         </svg>
       </div>
       <h4>高視野駕駛座</h4>
-      <p>高度優待視視覺視覺的<br>高視野駕駛座</p>
+      <p>座椅結構全面墊高，<br>視野遼闊無死角。</p>
     </div>
 
     <div class="card">
       <div class="card-icon">
-        <!-- Pedal icon -->
-        <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
-          <rect x="10" y="28" width="28" height="10" rx="3" stroke="#3a3228" stroke-width="2" fill="none"/>
-          <rect x="16" y="18" width="16" height="10" rx="2" stroke="#3a3228" stroke-width="2" fill="none"/>
-          <path d="M24 18 L24 10" stroke="#3a3228" stroke-width="2"/>
-          <path d="M18 10 L30 10" stroke="#3a3228" stroke-width="2" stroke-linecap="round"/>
-          <path d="M36 23 L42 23 M36 21 L42 21" stroke="#c04a28" stroke-width="1.5" stroke-linecap="round"/>
+        <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+          <rect x="10" y="30" width="30" height="12" rx="3" stroke="#111" stroke-width="2"/>
+          <rect x="17" y="18" width="18" height="12" rx="2" stroke="#111" stroke-width="2"/>
+          <line x1="26" y1="18" x2="26" y2="10" stroke="#111" stroke-width="2"/>
+          <line x1="20" y1="10" x2="32" y2="10" stroke="#111" stroke-width="2" stroke-linecap="round"/>
+          <line x1="42" y1="25" x2="48" y2="25" stroke="#D4312A" stroke-width="2" stroke-linecap="round"/>
+          <line x1="42" y1="29" x2="48" y2="29" stroke="#D4312A" stroke-width="2" stroke-linecap="round"/>
         </svg>
       </div>
       <h4>可調式腳踏板</h4>
-      <p>可調式腳車踏板、可調式<br>腳車踏油門的踏板</p>
+      <p>延伸式踏板設計，<br>輕鬆踩踏毫不費力。</p>
     </div>
 
     <div class="card">
       <div class="card-icon">
-        <!-- Ergonomics head icon -->
-        <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
-          <circle cx="24" cy="16" r="9" stroke="#3a3228" stroke-width="2" fill="none"/>
-          <path d="M15 32 Q24 26 33 32 L35 44 L13 44 Z" stroke="#3a3228" stroke-width="2" fill="none"/>
-          <path d="M20 14 Q24 12 28 14" stroke="#c04a28" stroke-width="1.5" fill="none"/>
-          <circle cx="20.5" cy="17" r="1.5" fill="#3a3228"/>
-          <circle cx="27.5" cy="17" r="1.5" fill="#3a3228"/>
-          <path d="M36 16 Q42 16 42 22 Q42 28 36 28" stroke="#3a3228" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-          <line x1="39" y1="16" x2="39" y2="28" stroke="#3a3228" stroke-width="1" stroke-dasharray="2 2"/>
+        <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+          <circle cx="28" cy="17" r="10" stroke="#111" stroke-width="2"/>
+          <path d="M18 34 Q28 27 38 34 L40 50 H16 Z" stroke="#111" stroke-width="2" fill="none"/>
+          <circle cx="24" cy="19" r="1.5" fill="#111"/>
+          <circle cx="32" cy="19" r="1.5" fill="#111"/>
+          <path d="M24 23 Q28 26 32 23" stroke="#D4312A" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <path d="M40 17 Q46 17 46 23 Q46 29 40 29" stroke="#111" stroke-width="1.5" fill="none" stroke-linecap="round"/>
         </svg>
       </div>
       <h4>貼心人體工學</h4>
-      <p>貼心人體工學、視野更好、<br>貼心人體工學</p>
+      <p>專屬身形支撐，<br>告別靠墊擁抱舒適感。</p>
     </div>
 
   </div>
