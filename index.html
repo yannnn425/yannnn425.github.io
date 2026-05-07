@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>mini matters × MINI Cooper</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --cream:      #F6F1E7;
+      --cream-dark: #EDE6D6;
+      --brown:      #2B2118;
+      --red:        #C0392B;
+      --gray:       #7A7268;
+      --white:      #FFFFFF;
+      --border:     rgba(43,33,24,.12);
+    }
+
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
+      background: var(--cream);
+      color: var(--brown);
+      overflow-x: hidden;
+    }
+
+    /* ─── Decorative flowers (SVG inline via background) ─── */
+    .flower {
+      position: absolute;
+      pointer-events: none;
+      opacity: .18;
+    }
+
+    /* ─── NAVBAR ─── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 52px;
+      height: 60px;
+      background: var(--cream);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 0;
+      list-style: none;
+    }
+
+    .nav-links li a {
+      display: inline-block;
+      padding: 4px 22px;
+      font-size: 14.5px;
+      font-weight: 500;
+      color: var(--brown);
+      text-decoration: none;
+      border-bottom: 2.5px solid transparent;
+      transition: border-color .2s, color .2s;
+    }
+
+    .nav-links li a:hover {
+      border-bottom-color: var(--brown);
+    }
+
+    .nav-links li.active a {
+      color: var(--red);
+      border-bottom-color: var(--red);
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: .04em;
+      white-space: nowrap;
+    }
+
+    .nav-logo .x-mark {
+      font-weight: 300;
+      font-size: 18px;
+      color: var(--gray);
+    }
+
+    /* MINI circular badge */
+    .mini-badge {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      border: 2.5px solid var(--brown);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 7px;
+      font-weight: 700;
+      letter-spacing: .06em;
+      line-height: 1.3;
+    }
+
+    .mini-badge span:first-child { font-size: 9px; }
+
+    /* ─── HERO ─── */
+    .hero {
+      position: relative;
+      padding: 56px 52px 0;
+      min-height: 540px;
+      overflow: hidden;
+    }
+
+    /* background flower deco */
+    .hero-flowers {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .hero-layout {
+      display: flex;
+      align-items: flex-start;
+      gap: 32px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* LEFT COPY */
+    .hero-copy {
+      flex: 0 0 auto;
+      width: 380px;
+      padding-top: 8px;
+    }
+
+    .hero-copy .collab-line {
+      font-size: 21px;
+      font-weight: 400;
+      color: var(--brown);
+      margin-bottom: 6px;
+    }
+
+    .hero-copy h1 {
+      font-size: 80px;
+      font-weight: 900;
+      line-height: 1.05;
+      color: var(--brown);
+      margin-bottom: 24px;
+      letter-spacing: .02em;
+    }
+
+    .hero-copy .pill {
+      display: inline-block;
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      border-radius: 999px;
+      padding: 8px 22px;
+      font-size: 14px;
+      color: #555;
+    }
+
+    /* DOWN ARROW */
+    .scroll-arrow {
+      margin-top: 60px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--gray);
+      font-size: 13px;
+    }
+
+    .scroll-arrow svg { flex-shrink: 0; }
+
+    /* RIGHT VISUAL */
+    .hero-visual {
+      flex: 1;
+      position: relative;
+    }
+
+    /* Car placeholder */
+    .car-block {
+      width: 100%;
+      height: 370px;
+      background: var(--cream-dark);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #aaa;
+      font-size: 13px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Flower pattern on car placeholder */
+    .car-block::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        radial-gradient(circle 28px, #3a3228 100%, transparent 0),
+        radial-gradient(circle 28px, #FFFFFF 100%, transparent 0),
+        radial-gradient(circle 28px, #3a3228 100%, transparent 0),
+        radial-gradient(circle 28px, #FFFFFF 100%, transparent 0),
+        radial-gradient(circle 28px, #c04a28 100%, transparent 0),
+        radial-gradient(circle 28px, #3a3228 100%, transparent 0);
+      background-size: 120px 120px;
+      background-position:
+        10% 30%,
+        35% 60%,
+        60% 25%,
+        80% 70%,
+        50% 80%,
+        75% 40%;
+      background-repeat: no-repeat;
+      opacity: .25;
+    }
+
+    .car-label {
+      position: relative;
+      z-index: 1;
+      background: rgba(255,255,255,.7);
+      border-radius: 8px;
+      padding: 8px 16px;
+      font-size: 13px;
+      color: #888;
+    }
+
+    /* FEATURE CALLOUT BOX */
+    .feature-box {
+      position: absolute;
+      top: -8px;
+      right: 0;
+      width: 258px;
+      background: var(--white);
+      border-radius: 14px;
+      padding: 14px;
+      box-shadow: 0 6px 24px rgba(0,0,0,.10);
+    }
+
+    .feature-box h3 {
+      font-size: 13.5px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+    }
+
+    .feature-thumb {
+      border-radius: 8px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .feature-thumb.wide {
+      grid-column: 1 / -1;
+    }
+
+    .thumb-block {
+      width: 100%;
+      height: 76px;
+      background: var(--cream-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: #aaa;
+    }
+
+    .thumb-block.tall { height: 120px; }
+
+    .num-badge {
+      position: absolute;
+      top: 5px;
+      left: 5px;
+      width: 18px;
+      height: 18px;
+      background: var(--brown);
+      color: var(--white);
+      border-radius: 50%;
+      font-size: 10px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .feature-box .caption {
+      margin-top: 8px;
+      font-size: 11.5px;
+      color: var(--gray);
+      line-height: 1.5;
+    }
+
+    /* ─── BOTTOM BAND ─── */
+    .bottom-band {
+      display: flex;
+      gap: 0;
+      padding: 48px 52px 52px;
+      align-items: flex-start;
+      margin-top: 32px;
+    }
+
+    /* Brand story */
+    .brand-story {
+      flex: 0 0 45%;
+      padding-right: 40px;
+      border-right: 1px solid var(--border);
+    }
+
+    .story-text {
+      font-size: 14px;
+      line-height: 2;
+      color: var(--gray);
+      border-left: 3.5px solid var(--cream-dark);
+      padding-left: 16px;
+      margin-bottom: 28px;
+    }
+
+    .bullet-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .bullet-list li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    .bullet-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--red);
+      flex-shrink: 0;
+    }
+
+    /* Feature cards */
+    .feature-cards {
+      flex: 1;
+      display: flex;
+      gap: 12px;
+      padding-left: 40px;
+    }
+
+    .card {
+      flex: 1;
+      background: var(--white);
+      border-radius: 14px;
+      padding: 22px 16px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+      box-shadow: 0 2px 10px rgba(0,0,0,.06);
+    }
+
+    .card-icon {
+      width: 80px;
+      height: 80px;
+      background: var(--cream);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card h4 {
+      font-size: 14.5px;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .card p {
+      font-size: 11.5px;
+      color: var(--gray);
+      text-align: center;
+      line-height: 1.7;
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      text-align: center;
+      padding: 18px 52px;
+      font-size: 11px;
+      color: var(--gray);
+      border-top: 1px solid var(--border);
+    }
+
+    /* ─── SVG flower helper ─── */
+    .deco-flower {
+      position: absolute;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════ NAVBAR ══════════ -->
+<nav>
+  <ul class="nav-links">
+    <li class="active"><a href="#">首頁</a></li>
+    <li><a href="#">聯名故事</a></li>
+    <li><a href="#">特別版車款</a></li>
+    <li><a href="#">功能介紹</a></li>
+    <li><a href="#">服飾聯名</a></li>
+    <li><a href="#">購車與預約</a></li>
+  </ul>
+
+  <div class="nav-logo">
+    <span>mini matters</span>
+    <span class="x-mark">×</span>
+    <div class="mini-badge">
+      <span>MINI</span>
+      <span style="font-size:6px;font-weight:400;letter-spacing:.05em">COOPER</span>
+    </div>
+  </div>
+</nav>
+
+<!-- ══════════ HERO ══════════ -->
+<section class="hero">
+
+  <!-- Background flower decorations -->
+  <div class="hero-flowers">
+    <svg class="deco-flower" style="top:-30px;left:-40px;opacity:.12" width="180" height="180" viewBox="0 0 180 180">
+      <g transform="translate(90,90)">
+        <ellipse rx="22" ry="40" fill="#3a3228" transform="rotate(0)"/>
+        <ellipse rx="22" ry="40" fill="#3a3228" transform="rotate(60)"/>
+        <ellipse rx="22" ry="40" fill="#3a3228" transform="rotate(120)"/>
+        <circle r="20" fill="#F6F1E7"/>
+      </g>
+    </svg>
+    <svg class="deco-flower" style="bottom:20px;left:10px;opacity:.1" width="120" height="120" viewBox="0 0 120 120">
+      <g transform="translate(60,60)">
+        <ellipse rx="15" ry="27" fill="#c04a28" transform="rotate(0)"/>
+        <ellipse rx="15" ry="27" fill="#c04a28" transform="rotate(60)"/>
+        <ellipse rx="15" ry="27" fill="#c04a28" transform="rotate(120)"/>
+        <circle r="14" fill="#F6F1E7"/>
+      </g>
+    </svg>
+    <svg class="deco-flower" style="top:10px;right:300px;opacity:.09" width="90" height="90" viewBox="0 0 90 90">
+      <g transform="translate(45,45)">
+        <ellipse rx="11" ry="20" fill="#3a3228" transform="rotate(0)"/>
+        <ellipse rx="11" ry="20" fill="#3a3228" transform="rotate(60)"/>
+        <ellipse rx="11" ry="20" fill="#3a3228" transform="rotate(120)"/>
+        <circle r="10" fill="#F6F1E7"/>
+      </g>
+    </svg>
+  </div>
+
+  <div class="hero-layout">
+
+    <!-- LEFT: copy -->
+    <div class="hero-copy">
+      <p class="collab-line">mini matters x MINI Cooper：</p>
+      <h1>小事・<br>大美好</h1>
+      <div class="pill">專為小個子女生設計的完美座駕</div>
+      <div class="scroll-arrow">
+        <svg width="16" height="24" viewBox="0 0 16 24" fill="none">
+          <line x1="8" y1="0" x2="8" y2="20" stroke="#7A7268" stroke-width="1.5"/>
+          <polyline points="3,15 8,21 13,15" fill="none" stroke="#7A7268" stroke-width="1.5"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- RIGHT: visual + feature callout -->
+    <div class="hero-visual">
+
+      <!-- Car image placeholder -->
+      <div class="car-block">
+        <div class="car-label">車輛主視覺圖（待替換）</div>
+      </div>
+
+      <!-- Feature callout box -->
+      <div class="feature-box">
+        <h3>小個子女生專屬功能：</h3>
+        <div class="feature-grid">
+          <!-- Row 1: wide top photo -->
+          <div class="feature-thumb wide" style="position:relative">
+            <div class="thumb-block tall" style="height:90px">座椅調整示意（待替換）</div>
+            <div class="num-badge">1</div>
+          </div>
+          <!-- Row 2: two side-by-side -->
+          <div class="feature-thumb" style="position:relative">
+            <div class="thumb-block">踏板示意</div>
+            <div class="num-badge">1</div>
+          </div>
+          <div class="feature-thumb" style="position:relative">
+            <div class="thumb-block">方向盤示意</div>
+            <div class="num-badge">2</div>
+          </div>
+        </div>
+        <p class="caption">1. 可調式腳車踏板、<br>油門與煞車踏板</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ BOTTOM BAND ══════════ -->
+<div class="bottom-band">
+
+  <!-- Brand story copy -->
+  <div class="brand-story">
+    <p class="story-text">
+      MINI matters × MINI Cooper 特別版聯名組合主韌聯名品mini matters<br>
+      幫著爸自圍主的故事，專為小個子中央黴觸子祺剙版前叭har、黌木、關車<br>
+      進計孩子的完美駕座好，小個子女生專屬功能能力。
+    </p>
+    <ul class="bullet-list">
+      <li>
+        <span class="bullet-dot"></span>
+        因為個子小，開車不再是困擾
+      </li>
+      <li>
+        <span class="bullet-dot"></span>
+        視野更好、踩得更穩、坐得更舒適
+      </li>
+    </ul>
+  </div>
+
+  <!-- 3 Feature cards -->
+  <div class="feature-cards">
+
+    <div class="card">
+      <div class="card-icon">
+        <!-- Seat icon -->
+        <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+          <rect x="8" y="10" width="20" height="28" rx="3" stroke="#3a3228" stroke-width="2" fill="none"/>
+          <rect x="28" y="28" width="12" height="8" rx="2" stroke="#3a3228" stroke-width="2" fill="none"/>
+          <line x1="28" y1="32" x2="8" y2="32" stroke="#3a3228" stroke-width="2"/>
+          <path d="M8 38 L8 42" stroke="#3a3228" stroke-width="2" stroke-linecap="round"/>
+          <path d="M28 38 L28 42" stroke="#3a3228" stroke-width="2" stroke-linecap="round"/>
+          <path d="M14 10 Q24 4 32 12" stroke="#c04a28" stroke-width="1.5" fill="none" stroke-dasharray="3 2"/>
+        </svg>
+      </div>
+      <h4>高視野駕駛座</h4>
+      <p>高度優待視視覺視覺的<br>高視野駕駛座</p>
+    </div>
+
+    <div class="card">
+      <div class="card-icon">
+        <!-- Pedal icon -->
+        <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+          <rect x="10" y="28" width="28" height="10" rx="3" stroke="#3a3228" stroke-width="2" fill="none"/>
+          <rect x="16" y="18" width="16" height="10" rx="2" stroke="#3a3228" stroke-width="2" fill="none"/>
+          <path d="M24 18 L24 10" stroke="#3a3228" stroke-width="2"/>
+          <path d="M18 10 L30 10" stroke="#3a3228" stroke-width="2" stroke-linecap="round"/>
+          <path d="M36 23 L42 23 M36 21 L42 21" stroke="#c04a28" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <h4>可調式腳踏板</h4>
+      <p>可調式腳車踏板、可調式<br>腳車踏油門的踏板</p>
+    </div>
+
+    <div class="card">
+      <div class="card-icon">
+        <!-- Ergonomics head icon -->
+        <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+          <circle cx="24" cy="16" r="9" stroke="#3a3228" stroke-width="2" fill="none"/>
+          <path d="M15 32 Q24 26 33 32 L35 44 L13 44 Z" stroke="#3a3228" stroke-width="2" fill="none"/>
+          <path d="M20 14 Q24 12 28 14" stroke="#c04a28" stroke-width="1.5" fill="none"/>
+          <circle cx="20.5" cy="17" r="1.5" fill="#3a3228"/>
+          <circle cx="27.5" cy="17" r="1.5" fill="#3a3228"/>
+          <path d="M36 16 Q42 16 42 22 Q42 28 36 28" stroke="#3a3228" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <line x1="39" y1="16" x2="39" y2="28" stroke="#3a3228" stroke-width="1" stroke-dasharray="2 2"/>
+        </svg>
+      </div>
+      <h4>貼心人體工學</h4>
+      <p>貼心人體工學、視野更好、<br>貼心人體工學</p>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════ FOOTER ══════════ -->
+<footer>
+  © 版權宣告層級的算術，如更改或建業術版均得購閱闢。 • All rights reserved.
+</footer>
+
+</body>
+</html>
