@@ -3,579 +3,193 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>mini matters × MINI Cooper</title>
+  <title>mini matters x MINI Cooper</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet" />
-  <style>
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
-    :root {
-      --black:  #111111;
-      --red:    #D4312A;
-      --white:  #FFFFFF;
-      --gray:   #767676;
-      --line:   rgba(17,17,17,.12);
-      --bg-ph:  #EFEFEF; /* placeholder blocks */
-    }
-
-    body {
-      font-family: 'Noto Sans TC', sans-serif;
-      background: var(--white);
-      color: var(--black);
-      overflow-x: hidden; /* prevents horizontal scroll from corner flowers */
-    }
-
-    /* ══════════════════════════════
-       FLOWER DECORATIONS
-       · position: absolute on <body> (body is the containing block)
-       · z-index: -10 → always beneath every content layer
-       · opacity: 0.85 → background-decoration feel
-       · max size ≈ 12 vw; partially clipped at page edges (diagonal layout)
-    ══════════════════════════════ */
-    body { position: relative; }
-
-    .deco-flower {
-      position: absolute;
-      pointer-events: none;
-      z-index: -1;
-      opacity: 0.85;
-    }
-
-    /* Content layers sit above flowers */
-    nav, section, .hero, .bottom-band, footer {
-      position: relative;
-      z-index: 0;
-    }
-
-    /* ══════════════════════════════
-       NAVBAR
-    ══════════════════════════════ */
-    nav {
-      position: sticky;
-      top: 0;
-      z-index: 200;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 52px;
-      height: 60px;
-      background: var(--white);
-      border-bottom: 1px solid var(--line);
-    }
-
-    .nav-links {
-      display: flex;
-      list-style: none;
-    }
-
-    .nav-links li a {
-      display: inline-block;
-      padding: 4px 20px;
-      font-size: 14.5px;
-      font-weight: 500;
-      color: var(--black);
-      text-decoration: none;
-      border-bottom: 2.5px solid transparent;
-      transition: border-color .2s, color .2s;
-    }
-
-    .nav-links li a:hover {
-      border-bottom-color: var(--black);
-    }
-
-    .nav-links li.active a {
-      color: var(--red);
-      border-bottom-color: var(--red);
-    }
-
-    .nav-logo {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 16px;
-      font-weight: 700;
-      letter-spacing: .04em;
-      white-space: nowrap;
-      color: var(--black);
-    }
-
-    .nav-logo .x-mark {
-      font-weight: 300;
-      font-size: 17px;
-      color: var(--gray);
-    }
-
-    .mini-badge {
-      width: 38px;
-      height: 38px;
-      border-radius: 50%;
-      border: 2.5px solid var(--black);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      font-size: 7px;
-      font-weight: 700;
-      letter-spacing: .06em;
-      line-height: 1.3;
-      color: var(--black);
-    }
-    .mini-badge span:first-child { font-size: 9px; }
-
-    /* ══════════════════════════════
-       HERO
-    ══════════════════════════════ */
-    .hero {
-      position: relative;
-      padding: 56px 52px 0;
-      min-height: 540px;
-      overflow: hidden;
-    }
-
-    .hero-flowers {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      overflow: hidden;
-    }
-
-    .hero-layout {
-      display: flex;
-      align-items: flex-start;
-      gap: 32px;
-      position: relative;
-      z-index: 1;
-    }
-
-    /* LEFT COPY */
-    .hero-copy {
-      flex: 0 0 auto;
-      width: 380px;
-      padding-top: 8px;
-    }
-
-    .hero-copy .collab-line {
-      font-size: 20px;
-      font-weight: 400;
-      color: var(--black);
-      margin-bottom: 6px;
-    }
-
-    .hero-copy h1 {
-      font-size: 80px;
-      font-weight: 900;
-      line-height: 1.05;
-      color: var(--black);
-      margin-bottom: 24px;
-      letter-spacing: .02em;
-    }
-
-    .hero-copy .pill {
-      display: inline-block;
-      background: var(--white);
-      border: 1.5px solid var(--black);
-      border-radius: 999px;
-      padding: 8px 22px;
-      font-size: 14px;
-      color: var(--black);
-    }
-
-    .scroll-arrow {
-      margin-top: 60px;
-      display: flex;
-      align-items: center;
-    }
-
-    /* RIGHT VISUAL */
-    .hero-visual {
-      flex: 1;
-      position: relative;
-    }
-
-    .car-block {
-      width: 100%;
-      height: 370px;
-      background: var(--bg-ph);
-      border-radius: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .car-label {
-      position: relative;
-      z-index: 1;
-      background: rgba(255,255,255,.8);
-      border-radius: 8px;
-      padding: 8px 16px;
-      font-size: 13px;
-      color: #999;
-      border: 1px solid var(--line);
-    }
-
-    /* FEATURE CALLOUT BOX */
-    .feature-box {
-      position: absolute;
-      top: -8px;
-      right: 0;
-      width: 258px;
-      background: var(--white);
-      border-radius: 14px;
-      padding: 14px;
-      border: 1px solid var(--line);
-      box-shadow: 0 4px 16px rgba(0,0,0,.08);
-    }
-
-    .feature-box h3 {
-      font-size: 13.5px;
-      font-weight: 700;
-      margin-bottom: 10px;
-      color: var(--black);
-    }
-
-    .feature-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 6px;
-    }
-
-    .feature-thumb {
-      border-radius: 8px;
-      overflow: hidden;
-      position: relative;
-    }
-
-    .feature-thumb.wide { grid-column: 1 / -1; }
-
-    .thumb-block {
-      width: 100%;
-      height: 76px;
-      background: var(--bg-ph);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 11px;
-      color: #aaa;
-    }
-
-    .num-badge {
-      position: absolute;
-      top: 5px;
-      left: 5px;
-      width: 18px;
-      height: 18px;
-      background: var(--black);
-      color: var(--white);
-      border-radius: 50%;
-      font-size: 10px;
-      font-weight: 700;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .feature-box .caption {
-      margin-top: 8px;
-      font-size: 11.5px;
-      color: var(--gray);
-      line-height: 1.5;
-    }
-
-    /* ══════════════════════════════
-       BOTTOM BAND
-    ══════════════════════════════ */
-    .bottom-band {
-      display: flex;
-      padding: 48px 52px 56px;
-      align-items: flex-start;
-      margin-top: 32px;
-      position: relative;
-    }
-
-    .brand-story {
-      flex: 0 0 45%;
-      padding-right: 40px;
-      border-right: 1px solid var(--line);
-    }
-
-    .story-text {
-      font-size: 14px;
-      line-height: 2;
-      color: var(--gray);
-      border-left: 3px solid var(--black);
-      padding-left: 16px;
-      margin-bottom: 28px;
-    }
-
-    .bullet-list {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-
-    .bullet-list li {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-size: 20px;
-      font-weight: 700;
-      color: var(--black);
-    }
-
-    .bullet-dot {
-      width: 11px;
-      height: 11px;
-      border-radius: 50%;
-      background: var(--red);
-      flex-shrink: 0;
-    }
-
-    /* Feature cards */
-    .feature-cards {
-      flex: 1;
-      display: flex;
-      gap: 12px;
-      padding-left: 40px;
-    }
-
-    .card {
-      flex: 1;
-      background: var(--white);
-      border-radius: 14px;
-      padding: 22px 16px 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 14px;
-      border: 1.5px solid var(--line);
-    }
-
-    .card-icon {
-      width: 80px;
-      height: 80px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .card h4 {
-      font-size: 14.5px;
-      font-weight: 700;
-      text-align: center;
-      color: var(--black);
-    }
-
-    .card p {
-      font-size: 11.5px;
-      color: var(--gray);
-      text-align: center;
-      line-height: 1.7;
-    }
-
-    /* ══════════════════════════════
-       FOOTER
-    ══════════════════════════════ */
-    footer {
-      text-align: center;
-      padding: 18px 52px;
-      font-size: 11px;
-      color: var(--gray);
-      border-top: 1px solid var(--line);
-    }
-  </style>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+  <div class="page-decor" aria-hidden="true">
+    <svg class="deco-flower deco-flower-black" viewBox="0 0 100 100">
+      <g transform="translate(50,50)">
+        <circle cx="0" cy="-26" r="18" />
+        <circle cx="22" cy="-13" r="18" />
+        <circle cx="22" cy="13" r="18" />
+        <circle cx="0" cy="26" r="18" />
+        <circle cx="-22" cy="13" r="18" />
+        <circle cx="-22" cy="-13" r="18" />
+        <circle class="flower-center" cx="0" cy="0" r="12" />
+        <circle cx="0" cy="0" r="5" />
+      </g>
+    </svg>
 
-<!-- ══════════ FLOWER DECORATIONS ══════════
-     只保留兩朵，z-index: -1
-     · 左上黑花：中心對齊標題左邊（x≈52px），垂直置中於 h1 區域
-     · 右上紅花：右半超出右邊緣，尺寸 12vh
-══════════════════════════════════════════ -->
-
-<!-- 左上：黑色大花
-     花朵中心 x = hero 左 padding 52px → left = 52px - 花寬/2 = calc(52px - 12.5vh)
-     花朵中心 y = nav(60) + hero padding(56) + collab行(28) + h1半高(85) ≈ 229px
-     → top = 229px - 花高/2 = calc(229px - 12.5vh)                              -->
-<svg class="deco-flower"
-     style="top:calc(229px - 12.5vh); left:calc(52px - 12.5vh);
-            width:25vh; height:25vh; min-width:150px; min-height:150px; max-width:200px; max-height:200px;"
-     viewBox="0 0 100 100" aria-hidden="true">
-  <g transform="translate(50,50)">
-    <circle cx="0"   cy="-26" r="18" fill="#111"/>
-    <circle cx="22"  cy="-13" r="18" fill="#111"/>
-    <circle cx="22"  cy="13"  r="18" fill="#111"/>
-    <circle cx="0"   cy="26"  r="18" fill="#111"/>
-    <circle cx="-22" cy="13"  r="18" fill="#111"/>
-    <circle cx="-22" cy="-13" r="18" fill="#111"/>
-    <circle cx="0"   cy="0"   r="12" fill="#fff"/>
-    <circle cx="0"   cy="0"   r="5"  fill="#111"/>
-  </g>
-</svg>
-
-<!-- 右上：紅色中花，縮小至 12vh，右半超出右邊緣 -->
-<svg class="deco-flower"
-     style="top:148px; right:calc(-6vh); width:12vh; height:12vh; min-width:80px; min-height:80px; max-width:110px; max-height:110px;"
-     viewBox="0 0 100 100" aria-hidden="true">
-  <g transform="translate(50,50)">
-    <circle cx="0"   cy="-26" r="18" fill="#D4312A"/>
-    <circle cx="22"  cy="-13" r="18" fill="#D4312A"/>
-    <circle cx="22"  cy="13"  r="18" fill="#D4312A"/>
-    <circle cx="0"   cy="26"  r="18" fill="#D4312A"/>
-    <circle cx="-22" cy="13"  r="18" fill="#D4312A"/>
-    <circle cx="-22" cy="-13" r="18" fill="#D4312A"/>
-    <circle cx="0"   cy="0"   r="12" fill="#fff"/>
-    <circle cx="0"   cy="0"   r="4"  fill="#D4312A"/>
-  </g>
-</svg>
-
-<!-- ══════════ NAVBAR ══════════ -->
-<nav>
-  <ul class="nav-links">
-    <li class="active"><a href="#">首頁</a></li>
-    <li><a href="#">聯名故事</a></li>
-    <li><a href="#">特別版車款</a></li>
-    <li><a href="#">功能介紹</a></li>
-    <li><a href="#">服飾聯名</a></li>
-    <li><a href="#">購車與預約</a></li>
-  </ul>
-
-  <div class="nav-logo">
-    <span>mini matters</span>
-    <span class="x-mark">×</span>
-    <div class="mini-badge">
-      <span>MINI</span>
-      <span style="font-size:6px;font-weight:400;letter-spacing:.05em">COOPER</span>
-    </div>
+    <svg class="deco-flower deco-flower-red" viewBox="0 0 100 100">
+      <g transform="translate(50,50)">
+        <circle cx="0" cy="-26" r="18" />
+        <circle cx="22" cy="-13" r="18" />
+        <circle cx="22" cy="13" r="18" />
+        <circle cx="0" cy="26" r="18" />
+        <circle cx="-22" cy="13" r="18" />
+        <circle cx="-22" cy="-13" r="18" />
+        <circle class="flower-center" cx="0" cy="0" r="12" />
+        <circle cx="0" cy="0" r="4" />
+      </g>
+    </svg>
   </div>
-</nav>
 
-<!-- ══════════ HERO ══════════ -->
-<section class="hero">
-  <div class="hero-layout">
+  <header class="site-header">
+    <nav class="site-nav" aria-label="主要導覽">
+      <a class="nav-logo" href="#home" aria-label="mini matters x MINI Cooper 首頁">
+        <span>mini matters</span>
+        <span class="x-mark">x</span>
+        <span class="mini-badge">
+          <span>MINI</span>
+          <span>COOPER</span>
+        </span>
+      </a>
 
-    <!-- LEFT copy -->
-    <div class="hero-copy">
-      <p class="collab-line">mini matters x MINI Cooper：</p>
-      <h1>小事・<br>大美好</h1>
-      <div class="pill">專為小個子女生設計的完美座駕</div>
-      <div class="scroll-arrow">
-        <svg width="16" height="26" viewBox="0 0 16 26" fill="none">
-          <line x1="8" y1="0" x2="8" y2="20" stroke="#111" stroke-width="1.5"/>
-          <polyline points="3,15 8,22 13,15" fill="none" stroke="#111" stroke-width="1.5"/>
-        </svg>
-      </div>
-    </div>
+      <button class="nav-toggle" type="button" aria-label="開啟選單" aria-expanded="false" aria-controls="primary-menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
 
-    <!-- RIGHT visual + feature callout -->
-    <div class="hero-visual">
+      <ul class="nav-links" id="primary-menu">
+        <li class="active"><a href="#home">首頁</a></li>
+        <li><a href="#story">聯名故事</a></li>
+        <li><a href="#edition">特別版車款</a></li>
+        <li><a href="#features">功能介紹</a></li>
+        <li><a href="#experience">使用者體驗影片</a></li>
+      </ul>
+    </nav>
+  </header>
 
-      <!-- Car placeholder -->
-      <div class="car-block">
-        <div class="car-label">車輛主視覺圖（待替換）</div>
-      </div>
+  <main>
+    <section class="hero" id="home">
+      <div class="hero-layout">
+        <div class="hero-copy">
+          <p class="collab-line">mini matters x MINI Cooper：</p>
+          <h1>小事・<br />大美好</h1>
+          <p class="pill">專為小個子女生設計的完美座駕</p>
+          <aside class="feature-box" aria-label="小個子女生專屬功能">
+            <h2>小個子女生專屬功能：</h2>
+            <div class="feature-grid">
+              <div class="feature-thumb wide">
+                <img src="doublemini_car_photo/doublemini_car_seat_demo.png" alt="MINI Cooper 駕駛座示意圖" />
+                <span class="num-badge">1</span>
+              </div>
+              <div class="feature-thumb">
+                <img src="doublemini_car_photo/doublemini_car_pedal_demo.png" alt="MINI Cooper 踏板示意圖" />
+                <span class="num-badge">2</span>
+              </div>
+              <div class="feature-thumb">
+                <img src="doublemini_car_photo/doublemini_car_steering%20wheel_demo.png" alt="MINI Cooper 方向盤示意圖" />
+                <span class="num-badge">3</span>
+              </div>
+            </div>
+            <p class="caption">可調式駕駛座、延伸踏板與方向盤，讓視野、踩踏與握感都更貼近妳。</p>
+          </aside>
+          <a class="scroll-arrow" href="#story" aria-label="前往聯名故事">
+            <svg width="16" height="26" viewBox="0 0 16 26" fill="none" aria-hidden="true">
+              <line x1="8" y1="0" x2="8" y2="20" stroke="currentColor" stroke-width="1.5" />
+              <polyline points="3,15 8,22 13,15" fill="none" stroke="currentColor" stroke-width="1.5" />
+            </svg>
+          </a>
+        </div>
 
-      <!-- Feature callout box -->
-      <div class="feature-box">
-        <h3>小個子女生專屬功能：</h3>
-        <div class="feature-grid">
-          <div class="feature-thumb wide">
-            <div class="thumb-block" style="height:90px">座椅調整示意（待替換）</div>
-            <div class="num-badge">1</div>
-          </div>
-          <div class="feature-thumb">
-            <div class="thumb-block">踏板示意</div>
-            <div class="num-badge">1</div>
-          </div>
-          <div class="feature-thumb">
-            <div class="thumb-block">方向盤示意</div>
-            <div class="num-badge">2</div>
+        <div class="hero-visual" id="edition">
+          <div class="car-block">
+            <img src="doublemini_car_photo/doublemini_car_demo.png" alt="mini matters x MINI Cooper 整台車示意圖" />
           </div>
         </div>
-        <p class="caption">1. 可調式腳車踏板、<br>油門與煞車踏板</p>
+      </div>
+    </section>
+
+    <section class="bottom-band" id="story">
+      <div class="brand-story">
+        <p class="story-text">
+          當經典車藝遇上微小卻重要的生活美學，專為小個子女生打造的移動空間誕生了。MINI Cooper 注入 mini matters 標誌性花朵，讓每一次駕馭都充滿春日浪漫。從結構優化到感性塗裝，我們重新定義視線高度，讓妳的世界從此大不相同。
+        </p>
+        <ul class="bullet-list">
+          <li>
+            <span class="bullet-dot"></span>
+            <span>因為個子小，開車不再是困擾</span>
+          </li>
+          <li>
+            <span class="bullet-dot"></span>
+            <span>視野更好、踩得更穩、坐得更舒適</span>
+          </li>
+        </ul>
       </div>
 
-    </div>
-  </div>
-</section>
+      <div class="feature-cards" id="features">
+        <article class="card">
+          <div class="card-icon" aria-hidden="true">
+            <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+              <rect x="8" y="10" width="22" height="30" rx="3" stroke="#111" stroke-width="2" />
+              <rect x="30" y="30" width="14" height="9" rx="2" stroke="#111" stroke-width="2" />
+              <line x1="30" y1="34" x2="8" y2="34" stroke="#111" stroke-width="2" />
+              <line x1="10" y1="40" x2="10" y2="46" stroke="#111" stroke-width="2" stroke-linecap="round" />
+              <line x1="30" y1="40" x2="30" y2="46" stroke="#111" stroke-width="2" stroke-linecap="round" />
+              <path d="M14 10 Q28 3 38 12" stroke="#D4312A" stroke-width="2" fill="none" stroke-linecap="round" />
+            </svg>
+          </div>
+          <h2>高視野駕駛座</h2>
+          <p>座椅結構全面墊高，<br />視野遼闊無死角。</p>
+        </article>
 
-<!-- ══════════ BOTTOM BAND ══════════ -->
-<div class="bottom-band">
+        <article class="card">
+          <div class="card-icon" aria-hidden="true">
+            <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+              <rect x="10" y="30" width="30" height="12" rx="3" stroke="#111" stroke-width="2" />
+              <rect x="17" y="18" width="18" height="12" rx="2" stroke="#111" stroke-width="2" />
+              <line x1="26" y1="18" x2="26" y2="10" stroke="#111" stroke-width="2" />
+              <line x1="20" y1="10" x2="32" y2="10" stroke="#111" stroke-width="2" stroke-linecap="round" />
+              <line x1="42" y1="25" x2="48" y2="25" stroke="#D4312A" stroke-width="2" stroke-linecap="round" />
+              <line x1="42" y1="29" x2="48" y2="29" stroke="#D4312A" stroke-width="2" stroke-linecap="round" />
+            </svg>
+          </div>
+          <h2>可調式腳踏板</h2>
+          <p>延伸式踏板設計，<br />輕鬆踩踏毫不費力。</p>
+        </article>
 
-  <!-- Brand story copy -->
-  <div class="brand-story">
-    <p class="story-text">
-      當經典車藝遇上微小卻重要的生活美學，專為小個子女生打造的移動空間誕生了。MINI Cooper 注入 mini matters 標誌性花朵，讓每一次駕馭都充滿春日浪漫。從結構優化到感性塗裝，我們重新定義視線高度，讓妳的世界從此大不相同。
-    </p>
-    <ul class="bullet-list">
-      <li>
-        <span class="bullet-dot"></span>
-        因為個子小，開車不再是困擾
-      </li>
-      <li>
-        <span class="bullet-dot"></span>
-        視野更好、踩得更穩、坐得更舒適
-      </li>
-    </ul>
-  </div>
-
-  <!-- 3 Feature cards -->
-  <div class="feature-cards">
-
-    <div class="card">
-      <div class="card-icon">
-        <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
-          <rect x="8" y="10" width="22" height="30" rx="3" stroke="#111" stroke-width="2"/>
-          <rect x="30" y="30" width="14" height="9" rx="2" stroke="#111" stroke-width="2"/>
-          <line x1="30" y1="34" x2="8" y2="34" stroke="#111" stroke-width="2"/>
-          <line x1="10" y1="40" x2="10" y2="46" stroke="#111" stroke-width="2" stroke-linecap="round"/>
-          <line x1="30" y1="40" x2="30" y2="46" stroke="#111" stroke-width="2" stroke-linecap="round"/>
-          <path d="M14 10 Q28 3 38 12" stroke="#D4312A" stroke-width="2" fill="none" stroke-linecap="round"/>
-        </svg>
+        <article class="card">
+          <div class="card-icon" aria-hidden="true">
+            <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+              <circle cx="28" cy="17" r="10" stroke="#111" stroke-width="2" />
+              <path d="M18 34 Q28 27 38 34 L40 50 H16 Z" stroke="#111" stroke-width="2" fill="none" />
+              <circle cx="24" cy="19" r="1.5" fill="#111" />
+              <circle cx="32" cy="19" r="1.5" fill="#111" />
+              <path d="M24 23 Q28 26 32 23" stroke="#D4312A" stroke-width="1.5" fill="none" stroke-linecap="round" />
+              <path d="M40 17 Q46 17 46 23 Q46 29 40 29" stroke="#111" stroke-width="1.5" fill="none" stroke-linecap="round" />
+            </svg>
+          </div>
+          <h2>貼心人體工學</h2>
+          <p>專屬身形支撐，<br />告別靠墊擁抱舒適感。</p>
+        </article>
       </div>
-      <h4>高視野駕駛座</h4>
-      <p>座椅結構全面墊高，<br>視野遼闊無死角。</p>
-    </div>
+    </section>
 
-    <div class="card">
-      <div class="card-icon">
-        <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
-          <rect x="10" y="30" width="30" height="12" rx="3" stroke="#111" stroke-width="2"/>
-          <rect x="17" y="18" width="18" height="12" rx="2" stroke="#111" stroke-width="2"/>
-          <line x1="26" y1="18" x2="26" y2="10" stroke="#111" stroke-width="2"/>
-          <line x1="20" y1="10" x2="32" y2="10" stroke="#111" stroke-width="2" stroke-linecap="round"/>
-          <line x1="42" y1="25" x2="48" y2="25" stroke="#D4312A" stroke-width="2" stroke-linecap="round"/>
-          <line x1="42" y1="29" x2="48" y2="29" stroke="#D4312A" stroke-width="2" stroke-linecap="round"/>
-        </svg>
+    <section class="experience-section" id="experience">
+      <div class="experience-copy">
+        <p class="section-kicker">USER EXPERIENCE</p>
+        <h2>使用者體驗影片</h2>
+        <p>150公分使用者「小亮」真實經驗分享！</p>
       </div>
-      <h4>可調式腳踏板</h4>
-      <p>延伸式踏板設計，<br>輕鬆踩踏毫不費力。</p>
-    </div>
-
-    <div class="card">
-      <div class="card-icon">
-        <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
-          <circle cx="28" cy="17" r="10" stroke="#111" stroke-width="2"/>
-          <path d="M18 34 Q28 27 38 34 L40 50 H16 Z" stroke="#111" stroke-width="2" fill="none"/>
-          <circle cx="24" cy="19" r="1.5" fill="#111"/>
-          <circle cx="32" cy="19" r="1.5" fill="#111"/>
-          <path d="M24 23 Q28 26 32 23" stroke="#D4312A" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-          <path d="M40 17 Q46 17 46 23 Q46 29 40 29" stroke="#111" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-        </svg>
+      <div class="video-frame">
+        <video controls preload="metadata" poster="thumbnail.png" aria-label="150公分使用者小亮真實經驗分享影片">
+          <source src="video.mp4" type="video/mp4" />
+          您的瀏覽器不支援影片播放。
+        </video>
       </div>
-      <h4>貼心人體工學</h4>
-      <p>專屬身形支撐，<br>告別靠墊擁抱舒適感。</p>
-    </div>
+    </section>
+  </main>
 
-  </div>
-</div>
+  <footer>
+    © 版權宣告層級的算術，如更改或建業術版均得購閱闢。 • All rights reserved.
+  </footer>
 
-<!-- ══════════ FOOTER ══════════ -->
-<footer>
-  © 版權宣告層級的算術，如更改或建業術版均得購閱闢。 • All rights reserved.
-</footer>
-
+  <script src="script.js"></script>
 </body>
 </html>
